@@ -1,0 +1,36 @@
+server:
+  port: 8081  #自定义监听端口,默认8080
+  servlet:
+    context-path: /my_adolesce #配置项目名
+spring:
+  application:
+    name: my-adolesce
+  devtools: #热部署
+    restart:
+      enabled: true #热部署开关，false即不启用热部署
+      exclude: test/**  #指定目录不更新
+  servlet:
+    encoding:
+      charset: UTF-8 #防止@Value自动注入   中文乱码
+    multipart:
+      enabled: true  #默认支持文件上传.
+      location: D://filetest/ # 上传文件的临时目录
+      max-request-size: 150MB
+      max-file-size: 15MB
+  profiles:  #指定使用哪个环境的配置文件
+    active:  #可永于指定用哪个配置文件  application-{active}.yml or application-{active}.properties
+      - dev
+cache:
+  enable: true #是否开启自定义的全局缓存
+  pack: redis #指定全局缓存的底层组件
+
+---
+# 测试环境配置
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:mysql:///mydatabase
+    username: root
+    password: root

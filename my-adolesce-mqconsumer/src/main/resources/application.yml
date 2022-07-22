@@ -1,0 +1,36 @@
+server:
+  port: 8082  #自定义监听端口,默认8080
+
+# RocketMQ相关配置
+rocketmq:
+  name-server: 127.0.0.1:9876
+
+spring:
+  application:
+    name: my-mqconsumer
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: lwd
+    password: lwd
+    listener:
+      direct:
+        acknowledge-mode: manual
+      simple:
+        prefetch: 1   #负载均衡参数，一次接收一条消息
+        acknowledge-mode: manual   # 消息开启手动确认
+        # 是否支持重试
+        retry:
+          enabled: true
+
+  cloud:
+    nacos: #nacos注册中心配置
+      discovery:
+        server-addr: 127.0.0.1:8848 # 配置nacos 服务端地址
+dubbo:
+  registry:
+    address: spring-cloud://localhost  #使用springcloud中注册中心的地址
+  consumer:
+    check: false
+
+
